@@ -17,7 +17,7 @@ export const config: Config = {
   sheet_areas: 'house_areas',
   updateCityPage: true,
   goto: { waitUntil: 'load', timeout: 9000 },
-  updateTimeLine: 1000 * 3600 * 24
+  updateTimeLine: 1000 * 3600 * 2
 };
 
 export interface Config {
