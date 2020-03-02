@@ -1,6 +1,5 @@
 import { DirectNavigationOptions, LaunchOptions } from 'puppeteer';
 
-
 export const config: Config = {
   detailID: 'data-lj_action_housedel_id',
   mysql: {
@@ -10,7 +9,7 @@ export const config: Config = {
     database: 'lianjia',
     connectTimeout: 900
   },
-  browser_lunch: { headless: true },
+  browser_lunch: { headless: true, args: ['--no-sandbox'] },
   timeout_open_page: 8000,
   pageLimit: 3,
   url_city_list: 'https://www.lianjia.com/city/',

@@ -9,7 +9,7 @@ exports.config = {
         database: 'lianjia',
         connectTimeout: 900
     },
-    browser_lunch: { headless: true },
+    browser_lunch: { headless: true, args: ['--no-sandbox'] },
     timeout_open_page: 8000,
     pageLimit: 3,
     url_city_list: 'https://www.lianjia.com/city/',
