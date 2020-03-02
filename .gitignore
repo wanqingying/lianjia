@@ -27,3 +27,4 @@ tmp
 .locales/*
 dev_locales
 .devoutput
+/lianjia_out/*

@@ -11,12 +11,12 @@ export const config: Config = {
   },
   browser_lunch: { headless: true, args: ['--no-sandbox'] },
   timeout_open_page: 8000,
-  pageLimit: 3,
+  pageLimit: 2,
   url_city_list: 'https://www.lianjia.com/city/',
   sheet_houses: 'house_infos',
   sheet_areas: 'house_areas',
   updateCityPage: true,
-  goto: { waitUntil: 'load', timeout: 9000 },
+  goto: { waitUntil: 'load', timeout: 15 * 1000 },
   updateTimeLine: 1000 * 3600 * 2,
   city: '重庆'
 };
