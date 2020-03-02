@@ -7,8 +7,6 @@ function main() {
     Promise.all([
         getTag()
     ]).then(() => {
-        console.log('============');
-        console.log(Date.now() - t);
     });
 }
 main();
@@ -30,7 +28,6 @@ function getTag() {
                     };
                     return k;
                 });
-                console.log(fs.length);
                 resolve();
             };
         });

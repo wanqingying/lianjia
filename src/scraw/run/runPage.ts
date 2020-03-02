@@ -8,8 +8,10 @@ house.run(main);
 async function main() {
   // 获取所有城市
   const cites = await getCityInfo();
+  console.log(cites);
   // 获取区县
-  const areasCit = await Promise.all(cites.map(getCityArea));
+  const areasCit = await Promise.all(cites.slice(0,3).map(getCityArea));
+  console.log(areasCit.length);
   // 得到区县列表
   const areas: HouseAreaDH[] = areasCit.reduce((pv, v) => pv.concat(v), []);
   // 同步到数据库

@@ -9,15 +9,23 @@ export async function findOrCreateHouseInfo(data: HouseInfoDH) {
     where: { houseDetailId: data.houseDetailId },
     defaults: data
   });
-  debugger;
   return pw;
 }
 
 export async function findOrCreateArea(data: HouseAreaDH) {
-  const res = await house.HouseAreaProject.findOrCreate({
-    where: { cityEn: data.cityEn, nameEn: data.nameEn },
-    defaults: data
-  });
+  let res;
+  if (!(data.lastFetchTime instanceof Date)) {
+    data.lastFetchTime = new Date(0);
+  }
+  try {
+    res = await house.HouseAreaProject.findOrCreate({
+      where: { cityEn: data.cityEn, nameEn: data.nameEn },
+      defaults: data
+    });
+    console.log('add', res);
+  } catch (e) {
+    console.error(e);
+  }
   return res;
 }
 
@@ -26,7 +34,7 @@ export async function findNextOne(): Promise<HouseAreaDB | null> {
   const one = await house.HouseAreaProject.findOne({
     where: {
       lastFetchTime: { [Op.lt]: new Date(Date.now() - config.updateTimeLine) },
-      cityCn: '重庆'
+      cityCn: config.city
     }
   });
   return one as any;

@@ -25,21 +25,17 @@ export async function syncCityHouseInfo(area: HouseAreaDB) {
     let page_index = area.pageIndex;
     const task: any[] = [];
     while (page_index <= page_size) {
-      console.log('push');
       task.push(async function f() {
         url = `https://${area.cityEn}.lianjia.com/ershoufang/${area.nameEn}/pg${page_index}/`;
         const pageData = await fetchPageData(url, area);
         await Deferred.runAsync(pageData.map(p => findOrCreateHouseInfo(p)));
         await updatePageIndex(area, page_index);
-        console.log(pageData.length);
         house.logSpeed();
       });
       page_index++;
     }
     try {
-      console.log(3);
       await Deferred.runAsync(task);
-      console.log(5);
     } catch (e) {
       throw e;
     }

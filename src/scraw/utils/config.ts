@@ -17,7 +17,8 @@ export const config: Config = {
   sheet_areas: 'house_areas',
   updateCityPage: true,
   goto: { waitUntil: 'load', timeout: 9000 },
-  updateTimeLine: 1000 * 3600 * 2
+  updateTimeLine: 1000 * 3600 * 2,
+  city: '重庆'
 };
 
 export interface Config {
@@ -33,4 +34,5 @@ export interface Config {
   updateCityPage: boolean;
   // 隔多久更新一次记录
   updateTimeLine: number;
+  city: string;
 }

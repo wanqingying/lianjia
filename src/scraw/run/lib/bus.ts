@@ -1,8 +1,17 @@
-import {config} from '../../utils/config';
-import {house} from '../../utils/factory';
-import {Page} from 'puppeteer';
-import {HouseAreaDB, HouseAreaDH, HouseInfoDH, HouseInfoDJ} from '../../interface/instance';
-import {findOrCreateHouseInfo, updateFetchTime, updatePageIndex} from '../../utils/service';
+import { config } from '../../utils/config';
+import { house } from '../../utils/factory';
+import { Page } from 'puppeteer';
+import {
+  HouseAreaDB,
+  HouseAreaDH,
+  HouseInfoDH,
+  HouseInfoDJ
+} from '../../interface/instance';
+import {
+  findOrCreateHouseInfo,
+  updateFetchTime,
+  updatePageIndex
+} from '../../utils/service';
 
 // 获取城市列表
 export async function getCityInfo(): Promise<HouseInfoDJ[]> {
@@ -26,13 +35,12 @@ export async function getCityInfo(): Promise<HouseInfoDJ[]> {
 }
 
 //获取地区列表
-export async function getCityArea(p: HouseInfoDJ):Promise<HouseAreaDH[]> {
+export async function getCityArea(p: HouseInfoDJ): Promise<HouseAreaDH[]> {
   return await house.run_page(async ct => {
+    let u;
     try {
-      await ct.goto(
-        `https://${p.cityEn}.lianjia.com/ershoufang/pg1/`,
-        config.goto
-      );
+      u = `https://${p.cityEn}.lianjia.com/ershoufang/pg1/`;
+      await ct.goto(u, config.goto);
       return await ct.$$eval(
         `.position div[data-role="ershoufang"] a`,
         async (options, p) => {
@@ -52,7 +60,7 @@ export async function getCityArea(p: HouseInfoDJ):Promise<HouseAreaDH[]> {
                 cityCn: p.cityCn,
                 cityEn: p.cityEn,
                 pageIndex: 0,
-                lastFetchTime: new Date(0)
+                lastFetchTime: new Date(Date.now())
               };
               return ca;
             })
@@ -94,7 +102,7 @@ export async function syncCityHouseInfo(area: HouseAreaDB) {
 
         const pageData = await fetchPageData(ct, area);
         for (let i = 0; i < pageData.length; i++) {
-         await  findOrCreateHouseInfo(pageData[i]);
+          await findOrCreateHouseInfo(pageData[i]);
         }
       } catch (e) {
         throw e;
@@ -113,39 +121,39 @@ export async function fetchPageData(
   area: HouseAreaDB
 ): Promise<HouseInfoDH[]> {
   return await ct.$$eval(
-      `.sellListContent li`,
-      async function fn(lis, area) {
-        return lis.map((li: HTMLLIElement) => {
-          const ak = li.querySelector('.title a') as HTMLLinkElement;
-          const [xiaoqu, community] = Array.from(
-              li.querySelectorAll('.positionInfo a')
-          ) as HTMLLinkElement[];
-          const tags = Array.from(
-              li.querySelectorAll('.tag span')
-          ) as HTMLSpanElement[];
-          const priceT = li.querySelector('.totalPrice span') as HTMLSpanElement;
-          const pt = (priceT?.innerText as any) * 10000 || 0;
-          const priceU = li.querySelector('.unitPrice') as HTMLDivElement;
-          const pu = (priceU?.dataset['price'] as any) * 1 || 0;
-          return {
-            houseDetailId: (li?.dataset['lj_action_housedel_id'] as string) || '',
-            cityEn: area.cityEn,
-            cityCn: area.cityCn,
-            areaEn: area.nameEn,
-            areaCn: area.nameCn,
-            community: community?.innerText || '',
-            communityLink: community?.href || '',
-            xiaoqu: xiaoqu?.innerText || '',
-            xiaoquLink: xiaoqu?.href || '',
-            title: ak?.innerText || '',
-            tag: tags.map(s => s?.innerText || '').join('&'),
-            link: ak?.href || '',
-            priceTotal: pt,
-            priceUnit: pu,
-            size: Math.round(pt / pu)
-          };
-        });
-      },
-      area
+    `.sellListContent li`,
+    async function fn(lis, area) {
+      return lis.map((li: HTMLLIElement) => {
+        const ak = li.querySelector('.title a') as HTMLLinkElement;
+        const [xiaoqu, community] = Array.from(
+          li.querySelectorAll('.positionInfo a')
+        ) as HTMLLinkElement[];
+        const tags = Array.from(
+          li.querySelectorAll('.tag span')
+        ) as HTMLSpanElement[];
+        const priceT = li.querySelector('.totalPrice span') as HTMLSpanElement;
+        const pt = (priceT?.innerText as any) * 10000 || 0;
+        const priceU = li.querySelector('.unitPrice') as HTMLDivElement;
+        const pu = (priceU?.dataset['price'] as any) * 1 || 0;
+        return {
+          houseDetailId: (li?.dataset['lj_action_housedel_id'] as string) || '',
+          cityEn: area.cityEn,
+          cityCn: area.cityCn,
+          areaEn: area.nameEn,
+          areaCn: area.nameCn,
+          community: community?.innerText || '',
+          communityLink: community?.href || '',
+          xiaoqu: xiaoqu?.innerText || '',
+          xiaoquLink: xiaoqu?.href || '',
+          title: ak?.innerText || '',
+          tag: tags.map(s => s?.innerText || '').join('&'),
+          link: ak?.href || '',
+          priceTotal: pt,
+          priceUnit: pu,
+          size: Math.round(pt / pu)
+        };
+      });
+    },
+    area
   );
 }

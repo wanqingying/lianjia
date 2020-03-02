@@ -25,8 +25,10 @@ async function getCityInfo() {
 exports.getCityInfo = getCityInfo;
 async function getCityArea(p) {
     return await factory_1.house.run_page(async (ct) => {
+        let u;
         try {
-            await ct.goto(`https://${p.cityEn}.lianjia.com/ershoufang/pg1/`, config_1.config.goto);
+            u = `https://${p.cityEn}.lianjia.com/ershoufang/pg1/`;
+            await ct.goto(u, config_1.config.goto);
             return await ct.$$eval(`.position div[data-role="ershoufang"] a`, async (options, p) => {
                 return options
                     .map((a) => {
@@ -43,7 +45,7 @@ async function getCityArea(p) {
                         cityCn: p.cityCn,
                         cityEn: p.cityEn,
                         pageIndex: 0,
-                        lastFetchTime: new Date(0)
+                        lastFetchTime: new Date(Date.now())
                     };
                     return ca;
                 })

@@ -9,15 +9,24 @@ async function findOrCreateHouseInfo(data) {
         where: { houseDetailId: data.houseDetailId },
         defaults: data
     });
-    debugger;
     return pw;
 }
 exports.findOrCreateHouseInfo = findOrCreateHouseInfo;
 async function findOrCreateArea(data) {
-    const res = await factory_1.house.HouseAreaProject.findOrCreate({
-        where: { cityEn: data.cityEn, nameEn: data.nameEn },
-        defaults: data
-    });
+    let res;
+    if (!(data.lastFetchTime instanceof Date)) {
+        data.lastFetchTime = new Date(0);
+    }
+    try {
+        res = await factory_1.house.HouseAreaProject.findOrCreate({
+            where: { cityEn: data.cityEn, nameEn: data.nameEn },
+            defaults: data
+        });
+        console.log('add', res);
+    }
+    catch (e) {
+        console.error(e);
+    }
     return res;
 }
 exports.findOrCreateArea = findOrCreateArea;
@@ -25,7 +34,7 @@ async function findNextOne() {
     const one = await factory_1.house.HouseAreaProject.findOne({
         where: {
             lastFetchTime: { [sequelize_1.Op.lt]: new Date(Date.now() - config_1.config.updateTimeLine) },
-            cityCn: '重庆'
+            cityCn: config_1.config.city
         }
     });
     return one;

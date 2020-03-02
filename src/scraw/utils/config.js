@@ -17,6 +17,7 @@ exports.config = {
     sheet_areas: 'house_areas',
     updateCityPage: true,
     goto: { waitUntil: 'load', timeout: 9000 },
-    updateTimeLine: 1000 * 3600 * 2
+    updateTimeLine: 1000 * 3600 * 2,
+    city: '重庆'
 };
 //# sourceMappingURL=config.js.map

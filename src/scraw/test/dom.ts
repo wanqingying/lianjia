@@ -11,8 +11,6 @@ function main() {
     // getTag(),
     getTag()
   ]).then(() => {
-    console.log('============');
-    console.log(Date.now() - t);
   });
 }
 
@@ -40,7 +38,6 @@ function getTag() {
           };
           return k;
         });
-        console.log(fs.length);
         resolve();
       };
     });
