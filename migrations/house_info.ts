@@ -1,5 +1,5 @@
 import { QueryInterface } from 'sequelize';
-import { config } from '../src/utils/config';
+import { config } from '../src/scraw/utils/config';
 
 export const getModelHouseInfo = function(Sequelize) {
   const { INTEGER, STRING, DATE } = Sequelize;

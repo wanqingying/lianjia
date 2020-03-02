@@ -1,9 +1,11 @@
 // @ts-ignore
 import S, { Model, STRING, Sequelize } from 'sequelize';
-import { getModelHouseInfo } from '../../migrations/house_info';
+import { getModelHouseInfo } from '../../../migrations/house_info';
 import { Deferred } from '../utils/comm';
-import { getModelHouseArea } from '../../migrations/house_areas';
+import { getModelHouseArea } from '../../../migrations/house_areas';
 import {config} from "../utils/config";
+
+
 
 export class HouseInfoProject extends Model {}
 

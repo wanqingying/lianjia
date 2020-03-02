@@ -5,7 +5,8 @@
     "noImplicitAny": false,
     "removeComments": true,
     "preserveConstEnums": true,
-//    "outFile": "../../built/local/tsc.js",
-    "sourceMap": true
+    //    "outFile": "../../built/local/tsc.js",
+    "sourceMap": true,
+    "baseUrl": "."
   }
 }

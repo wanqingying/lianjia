@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_1 = require("../src/utils/config");
+const config_1 = require("../src/scraw/utils/config");
 exports.getModelHouseInfo = function (Sequelize) {
     const { INTEGER, STRING, DATE } = Sequelize;
     return {

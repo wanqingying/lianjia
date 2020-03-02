@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
-const house_info_1 = require("../../migrations/house_info");
+const house_info_1 = require("../../../migrations/house_info");
 const comm_1 = require("../utils/comm");
-const house_areas_1 = require("../../migrations/house_areas");
+const house_areas_1 = require("../../../migrations/house_areas");
 const config_1 = require("../utils/config");
 class HouseInfoProject extends sequelize_1.Model {
 }
