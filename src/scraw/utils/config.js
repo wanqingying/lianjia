@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = {
     detailID: 'data-lj_action_housedel_id',
     mysql: {
-        host: 'localhost',
-        user: 'lianjia',
+        host: '123.57.249.114',
+        user: 'root',
         password: 'wan@com123',
         database: 'lianjia',
         connectTimeout: 900

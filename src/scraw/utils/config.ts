@@ -1,10 +1,11 @@
 import { DirectNavigationOptions, LaunchOptions } from 'puppeteer';
 
+
 export const config: Config = {
   detailID: 'data-lj_action_housedel_id',
   mysql: {
-    host: 'localhost',
-    user: 'lianjia',
+    host: '123.57.249.114',
+    user: 'root',
     password: 'wan@com123',
     database: 'lianjia',
     connectTimeout: 900

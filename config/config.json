@@ -1,26 +1,26 @@
 {
   "development": {
-    "username": "lianjia",
+    "username": "root",
     "password": "wan@com123",
     "database": "lianjia",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
+    "host": "123.57.249.114",
+    "dialect": "mariadb",
     "operatorsAliases": false
   },
   "test": {
-    "username": "lianjia",
+    "username": "root",
     "password": "wan@com123",
     "database": "lianjia",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
+    "host": "123.57.249.114",
+    "dialect": "mariadb",
     "operatorsAliases": false
   },
   "production": {
-    "username": "lianjia",
+    "username": "root",
     "password": "wan@com123",
     "database": "lianjia",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
+    "host": "123.57.249.114",
+    "dialect": "mariadb",
     "operatorsAliases": false
   }
 }
