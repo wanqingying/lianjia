@@ -4,7 +4,6 @@ const factory_1 = require("./factory");
 const sequelize_1 = require("sequelize");
 const config_1 = require("./config");
 async function findOrCreateHouseInfo(data) {
-    console.log('foc', data.houseDetailId);
     const pw = await factory_1.house.HouseInfoProject.findOrCreate({
         where: { houseDetailId: data.houseDetailId },
         defaults: data

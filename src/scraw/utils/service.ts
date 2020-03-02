@@ -4,7 +4,6 @@ import { Op } from 'sequelize';
 import { config } from './config';
 
 export async function findOrCreateHouseInfo(data: HouseInfoDH) {
-  console.log('foc', data.houseDetailId);
   const pw = await house.HouseInfoProject.findOrCreate({
     where: { houseDetailId: data.houseDetailId },
     defaults: data

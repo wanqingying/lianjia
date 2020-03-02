@@ -5,9 +5,10 @@ import { findNextOne } from '../utils/service';
 house.run(main);
 
 async function main() {
+
   let area = await findNextOne();
   let k = 0;
-  while (area && k < 4000) {
+  while (area && k < 4555) {
     await syncCityHouseInfo(area);
     area = await findNextOne();
     k++;
