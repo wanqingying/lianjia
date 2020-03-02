@@ -1,0 +1,31 @@
+{
+  "scripts": {
+    "run": "node  ./src/run/main.js",
+    "create_user": "npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string",
+    "db_create": "npx sequelize-cli migration:generate --name house_test",
+    "db_sync": "npx sequelize-cli db:migrate",
+    "db_undo": "npx sequelize-cli db:migrate:undo",
+    "run_page": "node ./src/run/runPage.js",
+    "run_house": "node ./src/run/runHouse.js",
+    "run_service": "node ./src/utils/service_test.js"
+  },
+  "dependencies": {
+    "@types/bluebird": "^3.5.29",
+    "@types/jsdom": "^16.1.0",
+    "@types/mysql": "^2.15.8",
+    "@types/puppeteer": "^2.0.0",
+    "@types/sequelize": "^4.28.8",
+    "@types/validator": "^12.0.1",
+    "axios": "^0.19.2",
+    "jsdom": "^16.2.0",
+    "lodash": "^4.17.15",
+    "mysql2": "^2.1.0",
+    "puppeteer": "^2.1.1",
+    "sequelize": "^5.21.5",
+    "sequelize-cli": "^5.5.1",
+    "typescript": "^3.8.2"
+  },
+  "devDependencies": {
+    "prettier": "1.19.1"
+  }
+}

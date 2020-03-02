@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "lianjia",
+    "password": "wan@com123",
+    "database": "lianjia",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "lianjia",
+    "password": "wan@com123",
+    "database": "lianjia",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "lianjia",
+    "password": "wan@com123",
+    "database": "lianjia",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}
