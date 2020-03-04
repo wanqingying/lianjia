@@ -82,7 +82,8 @@ export async function fetchPageData(
       link: ak?.href || '',
       priceTotal: pt,
       priceUnit: pu,
-      size: Math.round(pt / pu)
+      size: Math.round(pt / pu),
+      fetchAt: undefined
     };
   });
 }

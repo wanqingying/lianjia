@@ -8,7 +8,7 @@ async function main() {
     let hs = await service_1.findNextHouse();
     factory_1.house.count = await factory_1.house.HouseInfoProject.count();
     let k = 0;
-    while (hs && k < 4000000) {
+    while (hs && k < 4) {
         const infos = await bus_1.fetchHouseInfo(hs);
         if (infos) {
             await service_1.createHousePrice({

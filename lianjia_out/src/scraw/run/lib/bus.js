@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = require("../../utils/config");
 const factory_1 = require("../../utils/factory");
 const service_1 = require("../../utils/service");
+const axios_1 = require("axios");
+const jsdom_1 = require("jsdom");
 async function getCityInfo() {
     return await factory_1.house.run_page(async (ct) => {
         await ct.goto(config_1.config.url_city_list, config_1.config.goto);
@@ -128,21 +130,23 @@ async function fetchPageData(ct, area) {
 }
 exports.fetchPageData = fetchPageData;
 async function fetchHouseInfo(h) {
-    const newInfo = await factory_1.house.run_page(async (ct) => {
-        await ct.goto(`https://${h.cityEn}.lianjia.com/ershoufang/${h.houseDetailId}.html`, config_1.config.goto);
-        const info = await ct.$eval(`body`, async (body) => {
-            var _a;
-            const tSpan = body.querySelector(`.price .total`);
-            const total = (tSpan === null || tSpan === void 0 ? void 0 : tSpan.innerText) * 10000 || 0;
-            const aSpan = body.querySelector('.area .mainInfo');
-            const area = ((_a = aSpan === null || aSpan === void 0 ? void 0 : aSpan.innerText) === null || _a === void 0 ? void 0 : _a.replace(/[^\d\.]/g, '')) * 1 || 0;
-            const unitPrice = Math.round(total / area) || 0;
-            const infos = { priceTotal: total, priceUnit: unitPrice, area: area };
-            return infos;
-        });
-        return info;
-    });
-    return newInfo;
+    var _a;
+    const url = `https://${h.cityEn}.lianjia.com/ershoufang/${h.houseDetailId}.html`;
+    const res = await axios_1.default.get(url);
+    const dom = new jsdom_1.JSDOM(`${res.data}`);
+    const body = dom.window.document.querySelector('body');
+    debugger;
+    const tSpan = body.querySelector(`.price .total`);
+    const total = (tSpan === null || tSpan === void 0 ? void 0 : tSpan.textContent) * 10000 || 0;
+    const aSpan = body.querySelector('.area .mainInfo');
+    const area = ((_a = aSpan === null || aSpan === void 0 ? void 0 : aSpan.textContent) === null || _a === void 0 ? void 0 : _a.replace(/[^\d\.]/g, '')) * 1 || 0;
+    const unitPrice = Math.round(total / area) || 0;
+    const infos = {
+        priceTotal: total,
+        priceUnit: unitPrice,
+        size: area,
+    };
+    return infos;
 }
 exports.fetchHouseInfo = fetchHouseInfo;
 //# sourceMappingURL=bus.js.map

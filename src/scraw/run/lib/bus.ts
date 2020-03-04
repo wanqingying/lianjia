@@ -14,6 +14,8 @@ import {
   updateFetchTime,
   updatePageIndex
 } from '../../utils/service';
+import axios from 'axios';
+import { JSDOM } from 'jsdom';
 
 // 获取城市列表
 export async function getCityInfo(): Promise<HouseInfoDJ[]> {
@@ -165,23 +167,22 @@ export async function fetchPageData(
 export async function fetchHouseInfo(
   h: HouseInfoDB
 ): Promise<HousePriceInfoDJ> {
-  const newInfo = await house.run_page(async ct => {
-    await ct.goto(
-      `https://${h.cityEn}.lianjia.com/ershoufang/${h.houseDetailId}.html`,
-      config.goto
-    );
-    const info = await ct.$eval(`body`, async body => {
-      const tSpan = body.querySelector(`.price .total`) as HTMLSpanElement;
-      const total = (tSpan?.innerText as any) * 10000 || 0;
+  const url = `https://${h.cityEn}.lianjia.com/ershoufang/${h.houseDetailId}.html`;
+  const res = await axios.get(url);
+  const dom = new JSDOM(`${res.data}`);
+  const body = dom.window.document.querySelector('body');
+  debugger;
+  const tSpan = body.querySelector(`.price .total`) as HTMLSpanElement;
+  const total = (tSpan?.textContent as any) * 10000 || 0;
 
-      const aSpan = body.querySelector('.area .mainInfo') as HTMLDivElement;
-      const area = (aSpan?.innerText?.replace(/[^\d\.]/g, '') as any) * 1 || 0;
+  const aSpan = body.querySelector('.area .mainInfo') as HTMLDivElement;
+  const area = (aSpan?.textContent?.replace(/[^\d\.]/g, '') as any) * 1 || 0;
 
-      const unitPrice = Math.round(total / area) || 0;
-      const infos = { priceTotal: total, priceUnit: unitPrice, area: area };
-      return infos;
-    });
-    return info;
-  });
-  return newInfo;
+  const unitPrice = Math.round(total / area) || 0;
+  const infos = {
+    priceTotal: total,
+    priceUnit: unitPrice,
+    size: area,
+  };
+  return infos;
 }

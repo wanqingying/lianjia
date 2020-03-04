@@ -63,7 +63,8 @@ async function fetchPageData(url, area) {
             link: (ak === null || ak === void 0 ? void 0 : ak.href) || '',
             priceTotal: pt,
             priceUnit: pu,
-            size: Math.round(pt / pu)
+            size: Math.round(pt / pu),
+            fetchAt: undefined
         };
     });
 }
