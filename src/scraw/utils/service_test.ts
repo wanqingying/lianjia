@@ -5,13 +5,12 @@ import { findNextHouse } from './service';
 house.run(main);
 
 async function main() {
-  let c= await house.HouseInfoProject.count()
-    console.log(c);
+  let c= await resetTime()
 }
 
 async function resetTime() {
   await house.HouseInfoProject.update(
-    { fetchAt: new Date(Date.now()) },
+    { fetchAt: new Date(0) },
     {
       where: {
         cityEn: 'cq'

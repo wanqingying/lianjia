@@ -10,12 +10,14 @@ async function main() {
   let k = 0;
   while (hs && k < 4000000) {
     const infos = await fetchHouseInfo(hs);
-    await createHousePrice({
-      houseDetailId: hs.houseDetailId,
-      priceTotal: infos.priceTotal,
-      priceUnit: infos.priceUnit,
-      size: infos.size
-    });
+    if (infos) {
+      await createHousePrice({
+        houseDetailId: hs.houseDetailId,
+        priceTotal: infos.priceTotal,
+        priceUnit: infos.priceUnit,
+        size: infos.size
+      });
+    }
     hs = await findNextHouse();
     house.logSpeed();
     k++;
