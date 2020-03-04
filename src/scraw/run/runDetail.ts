@@ -9,7 +9,7 @@ async function main() {
   let hs = await findNextHouse();
   house.count = await house.HouseInfoProject.count();
   let k = 0;
-  while (hs && k < 4) {
+  while (hs && k < 400000) {
     const infos = await fetchHouseInfo(hs);
     if (infos) {
       await createHousePrice({
