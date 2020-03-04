@@ -11,7 +11,7 @@ export const config: Config = {
   },
   browser_lunch: { headless: true, args: ['--no-sandbox'] },
   timeout_open_page: 8000,
-  pageLimit: 2,
+  pageLimit: 1,
   url_city_list: 'https://www.lianjia.com/city/',
   sheet_houses: 'house_infos',
   sheet_areas: 'house_areas',
