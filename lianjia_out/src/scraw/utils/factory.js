@@ -81,12 +81,14 @@ class House {
                 }
             }
             await this.sequelize.authenticate();
-            const [info, area] = await Promise.all([
+            const [info, area, price] = await Promise.all([
                 model_1.getHouseInfoProject(this.sequelize),
-                model_1.getHouseAreaProject(this.sequelize)
+                model_1.getHouseAreaProject(this.sequelize),
+                model_1.getHousePriceProject(this.sequelize)
             ]);
             this.HouseInfoProject = info;
             this.HouseAreaProject = area;
+            this.HousePriceProject = price;
         };
         this.end = async () => {
             var _a, _b;

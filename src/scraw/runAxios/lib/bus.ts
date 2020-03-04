@@ -1,4 +1,4 @@
-import { HouseAreaDB } from '../../interface/instance';
+import { HouseAreaDB } from '../../../interface/instance';
 import { house } from '../../utils/factory';
 import { config } from '../../utils/config';
 import {
@@ -11,7 +11,7 @@ import {
   HouseAreaDH,
   HouseInfoDJ,
   HouseInfoDH
-} from '../../interface/instance';
+} from '../../../interface/instance';
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import { getPageSize } from '../../run/lib/bus';
@@ -24,6 +24,7 @@ export async function syncCityHouseInfo(area: HouseAreaDB) {
     let page_size = await getPageSize(ct);
     let page_index = area.pageIndex;
     const task: any[] = [];
+
     while (page_index <= page_size) {
       task.push(async function f() {
         url = `https://${area.cityEn}.lianjia.com/ershoufang/${area.nameEn}/pg${page_index}/`;

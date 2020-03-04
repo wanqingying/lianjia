@@ -39,6 +39,20 @@ async function findNextOne() {
     return one;
 }
 exports.findNextOne = findNextOne;
+async function findNextHouse() {
+    const nextHouse = await factory_1.house.HouseInfoProject.findOne({
+        where: {
+            updatedAt: { [sequelize_1.Op.lt]: new Date(Date.now() - config_1.config.updateTimeLine) },
+            cityCn: config_1.config.city
+        }
+    });
+    return nextHouse;
+}
+exports.findNextHouse = findNextHouse;
+async function createHousePrice(data) {
+    await factory_1.house.HousePriceProject.create(data);
+}
+exports.createHousePrice = createHousePrice;
 async function updatePageIndex(area, pageIndex) {
     await factory_1.house.HouseAreaProject.update({ pageIndex: pageIndex }, { where: { areaId: area.areaId } });
 }

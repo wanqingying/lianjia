@@ -1,7 +1,7 @@
 import { house } from '../utils/factory';
 import { getCityArea, getCityInfo } from './lib/bus';
 import { findOrCreateArea } from '../utils/service';
-import { HouseAreaDH } from '../interface/instance';
+import { HouseAreaDH } from '../../interface/instance';
 
 house.run(main);
 

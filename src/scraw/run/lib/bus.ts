@@ -6,7 +6,7 @@ import {
   HouseAreaDH,
   HouseInfoDH,
   HouseInfoDJ
-} from '../../interface/instance';
+} from '../../../interface/instance';
 import {
   findOrCreateHouseInfo,
   updateFetchTime,

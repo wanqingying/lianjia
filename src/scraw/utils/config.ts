@@ -15,6 +15,7 @@ export const config: Config = {
   url_city_list: 'https://www.lianjia.com/city/',
   sheet_houses: 'house_infos',
   sheet_areas: 'house_areas',
+  sheet_prices: 'sheet_prices',
   updateCityPage: true,
   goto: { waitUntil: 'load', timeout: 15 * 1000 },
   updateTimeLine: 1000 * 3600 * 2,
@@ -30,6 +31,7 @@ export interface Config {
   url_city_list: string;
   sheet_houses: string;
   sheet_areas: string;
+  sheet_prices: string;
   goto: DirectNavigationOptions;
   updateCityPage: boolean;
   // 隔多久更新一次记录

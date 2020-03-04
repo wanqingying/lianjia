@@ -5,8 +5,10 @@ import { Deferred } from './comm';
 import {
   getHouseAreaProject,
   getHouseInfoProject,
+  getHousePriceProject,
   HouseAreaProject,
-  HouseInfoProject
+  HouseInfoProject,
+  HousePriceProject
 } from '../sequelize/model';
 
 interface Wtg {
@@ -37,6 +39,7 @@ export class House {
 
   public HouseInfoProject: typeof HouseInfoProject;
   public HouseAreaProject: typeof HouseAreaProject;
+  public HousePriceProject: typeof HousePriceProject;
 
   constructor(setting?: HouseSetting) {
     Object.assign(this.setting, setting);
@@ -101,12 +104,14 @@ export class House {
       }
     }
     await this.sequelize.authenticate();
-    const [info, area] = await Promise.all([
+    const [info, area, price] = await Promise.all([
       getHouseInfoProject(this.sequelize),
-      getHouseAreaProject(this.sequelize)
+      getHouseAreaProject(this.sequelize),
+      getHousePriceProject(this.sequelize)
     ]);
     this.HouseInfoProject = info as any;
     this.HouseAreaProject = area as any;
+    this.HousePriceProject = price as any;
   };
   public end = async () => {
     await Promise.all([this?.browser?.close(), this?.sequelize?.close()]);

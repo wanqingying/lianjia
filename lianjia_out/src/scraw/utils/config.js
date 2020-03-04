@@ -15,6 +15,7 @@ exports.config = {
     url_city_list: 'https://www.lianjia.com/city/',
     sheet_houses: 'house_infos',
     sheet_areas: 'house_areas',
+    sheet_prices: 'sheet_prices',
     updateCityPage: true,
     goto: { waitUntil: 'load', timeout: 15 * 1000 },
     updateTimeLine: 1000 * 3600 * 2,

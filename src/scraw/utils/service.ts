@@ -1,5 +1,10 @@
 import { house } from './factory';
-import { HouseAreaDB, HouseAreaDH, HouseInfoDH } from '../interface/instance';
+import {
+  HouseAreaDB,
+  HouseAreaDH,
+  HouseInfoDB,
+  HouseInfoDH, HousePriceInfoDH
+} from '../../interface/instance';
 import { Op } from 'sequelize';
 import { config } from './config';
 
@@ -37,6 +42,21 @@ export async function findNextOne(): Promise<HouseAreaDB | null> {
     }
   });
   return one as any;
+}
+
+// 获取下一个需要更新的房屋数据
+export async function findNextHouse(): Promise<HouseInfoDB> {
+  const nextHouse = await house.HouseInfoProject.findOne({
+    where: {
+      updatedAt: { [Op.lt]: new Date(Date.now() - config.updateTimeLine) },
+      cityCn: config.city
+    }
+  });
+  return nextHouse as any;
+}
+
+export async function createHousePrice(data:HousePriceInfoDH) {
+  await house.HousePriceProject.create(data)
 }
 
 export async function updatePageIndex(area: HouseAreaDB, pageIndex: number) {
