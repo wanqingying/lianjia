@@ -7,7 +7,7 @@ const axios_1 = require("axios");
 const jsdom_1 = require("jsdom");
 const bus_1 = require("../../run/lib/bus");
 const comm_1 = require("../../utils/comm");
-async function syncCityHouseInfo(area) {
+async function syncAreaHouseInfo(area) {
     return await factory_1.house.run_page(async (ct) => {
         let url = `https://${area.cityEn}.lianjia.com/ershoufang/${area.nameEn}/`;
         await ct.goto(url, config_1.config.goto);
@@ -33,7 +33,7 @@ async function syncCityHouseInfo(area) {
         await service_1.updateFetchTime(area);
     });
 }
-exports.syncCityHouseInfo = syncCityHouseInfo;
+exports.syncAreaHouseInfo = syncAreaHouseInfo;
 async function fetchPageData(url, area) {
     const res = await axios_1.default.get(url);
     const dom = new jsdom_1.JSDOM(`${res.data}`);

@@ -29,7 +29,7 @@ async function findOrCreateArea(data) {
     return res;
 }
 exports.findOrCreateArea = findOrCreateArea;
-async function findNextOne() {
+async function findNextArea() {
     const one = await factory_1.house.HouseAreaProject.findOne({
         where: {
             lastFetchTime: { [sequelize_1.Op.lt]: new Date(Date.now() - config_1.config.updateTimeLine) },
@@ -38,15 +38,19 @@ async function findNextOne() {
     });
     return one;
 }
-exports.findNextOne = findNextOne;
+exports.findNextArea = findNextArea;
 async function findNextHouse() {
-    const nextHouse = await factory_1.house.HouseInfoProject.findOne({
+    const res = (await factory_1.house.HouseInfoProject.findOne({
         where: {
-            updatedAt: { [sequelize_1.Op.lt]: new Date(Date.now() - config_1.config.updateTimeLine) },
-            cityCn: config_1.config.city
+            fetchAt: { [sequelize_1.Op.lt]: new Date(Date.now() - config_1.config.updateTimeLine) }
         }
-    });
-    return nextHouse;
+    }));
+    if (res) {
+        await factory_1.house.HouseInfoProject.update({ fetchAt: new Date(Date.now()) }, {
+            where: { houseDetailId: res.houseDetailId }
+        });
+    }
+    return res;
 }
 exports.findNextHouse = findNextHouse;
 async function createHousePrice(data) {

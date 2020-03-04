@@ -5,8 +5,9 @@
     "db_create": "npx sequelize-cli migration:generate --name house_test",
     "db_sync": "npx sequelize-cli db:migrate",
     "db_undo": "npx sequelize-cli db:migrate:undo",
-    "run_page": "node ./src/run/runPage.js",
-    "run_house": "node ./src/run/runHouse.js",
+    "run_page": "node ./lianjia_out/src/scraw/run/runPage.js",
+    "run_house": "node ./lianjia_out/src/scraw/run/runHouse.js",
+    "run_detail": "node ./lianjia_out/src/scraw/run/runDetail.js",
     "run_service": "node ./lianjia_out/src/scraw/utils/service_test.js"
   },
   "dependencies": {

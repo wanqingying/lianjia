@@ -22,6 +22,7 @@ export interface HouseInfoDH extends HouseInfoDJ {
   priceTotal: number;
   priceUnit: number;
   size: number;
+  fetchAt: string | Date;
 }
 
 export interface HouseInfoDJ {
@@ -43,8 +44,11 @@ export interface HouseAreaDH {
   lastFetchTime: Date;
 }
 
-export interface HousePriceInfoDH {
+export interface HousePriceInfoDH extends HousePriceInfoDJ {
   houseDetailId: string;
+}
+
+export interface HousePriceInfoDJ {
   priceTotal: number;
   priceUnit: number;
   size: number;

@@ -12,6 +12,7 @@ exports.getModelHouseInfo = function (Sequelize) {
         },
         createdAt: DATE,
         updatedAt: DATE,
+        fetchAt: DATE,
         houseDetailId: { type: STRING(30), unique: true },
         cityEn: STRING(30),
         cityCn: STRING(30),

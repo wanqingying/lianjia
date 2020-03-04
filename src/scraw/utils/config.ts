@@ -18,7 +18,8 @@ export const config: Config = {
   sheet_prices: 'sheet_prices',
   updateCityPage: true,
   goto: { waitUntil: 'load', timeout: 15 * 1000 },
-  updateTimeLine: 1000 * 3600 * 2,
+  // updateTimeLine: 1000 * 3600 * 2,
+  updateTimeLine: 1000 * 3600 * 24,
   city: '重庆'
 };
 

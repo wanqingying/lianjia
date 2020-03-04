@@ -6,9 +6,7 @@ const service_1 = require("../utils/service");
 factory_1.house.run(main);
 async function main() {
     const cites = await bus_1.getCityInfo();
-    console.log(cites);
     const areasCit = await Promise.all(cites.slice(0, 3).map(bus_1.getCityArea));
-    console.log(areasCit.length);
     const areas = areasCit.reduce((pv, v) => pv.concat(v), []);
     await Promise.all(areas.map(service_1.findOrCreateArea));
 }

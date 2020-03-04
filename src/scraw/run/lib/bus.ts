@@ -4,8 +4,10 @@ import { Page } from 'puppeteer';
 import {
   HouseAreaDB,
   HouseAreaDH,
+  HouseInfoDB,
   HouseInfoDH,
-  HouseInfoDJ
+  HouseInfoDJ,
+  HousePriceInfoDJ
 } from '../../../interface/instance';
 import {
   findOrCreateHouseInfo,
@@ -150,10 +152,36 @@ export async function fetchPageData(
           link: ak?.href || '',
           priceTotal: pt,
           priceUnit: pu,
-          size: Math.round(pt / pu)
+          size: Math.round(pt / pu),
+          fetchAt: new Date(1000)
         };
       });
     },
     area
   );
+}
+
+//根据detailID获取house信息
+export async function fetchHouseInfo(
+  h: HouseInfoDB
+): Promise<HousePriceInfoDJ> {
+  const newInfo = await house.run_page(async ct => {
+    await ct.goto(
+      `https://${h.cityEn}.lianjia.com/ershoufang/${h.houseDetailId}.html`,
+      config.goto
+    );
+    const info = await ct.$eval(`body`, async body => {
+      const tSpan = body.querySelector(`.price .total`) as HTMLSpanElement;
+      const total = (tSpan?.innerText as any) * 10000 || 0;
+
+      const aSpan = body.querySelector('.area .mainInfo') as HTMLDivElement;
+      const area = (aSpan?.innerText?.replace(/[^\d\.]/g, '') as any) * 1 || 0;
+
+      const unitPrice = Math.round(total / area) || 0;
+      const infos = { priceTotal: total, priceUnit: unitPrice, area: area };
+      return infos;
+    });
+    return info;
+  });
+  return newInfo;
 }

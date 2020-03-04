@@ -24,6 +24,8 @@ class House {
             logging: false
         });
         this.countA = [];
+        this.completeCount = 0;
+        this.count = 0;
         this.run_page = (callback, _page) => {
             let page = _page || this.pages.shift();
             let def = new comm_1.Deferred();
@@ -67,6 +69,7 @@ class House {
                 .then(() => { })
                 .catch(e => {
                 console.error(e === null || e === void 0 ? void 0 : e.message);
+                console.log(e);
             })
                 .finally(() => {
                 console.log('done');
@@ -102,10 +105,11 @@ class House {
                 this.countA.shift();
                 this.countA.push(Date.now());
             }
+            this.completeCount++;
             const start = this.countA[0];
             const end = this.countA[this.countA.length - 1];
             const sd = Math.round((end - start) / this.countA.length) || 5000;
-            console.log('speed:', sd + 'ms/p');
+            console.log(`${this.completeCount}/${this.count}`, 'speed:', sd + 'ms/p');
         };
         Object.assign(this.setting, setting);
     }

@@ -120,10 +120,29 @@ async function fetchPageData(ct, area) {
                 link: (ak === null || ak === void 0 ? void 0 : ak.href) || '',
                 priceTotal: pt,
                 priceUnit: pu,
-                size: Math.round(pt / pu)
+                size: Math.round(pt / pu),
+                fetchAt: new Date(1000)
             };
         });
     }, area);
 }
 exports.fetchPageData = fetchPageData;
+async function fetchHouseInfo(h) {
+    const newInfo = await factory_1.house.run_page(async (ct) => {
+        await ct.goto(`https://${h.cityEn}.lianjia.com/ershoufang/${h.houseDetailId}.html`, config_1.config.goto);
+        const info = await ct.$eval(`body`, async (body) => {
+            var _a;
+            const tSpan = body.querySelector(`.price .total`);
+            const total = (tSpan === null || tSpan === void 0 ? void 0 : tSpan.innerText) * 10000 || 0;
+            const aSpan = body.querySelector('.area .mainInfo');
+            const area = ((_a = aSpan === null || aSpan === void 0 ? void 0 : aSpan.innerText) === null || _a === void 0 ? void 0 : _a.replace(/[^\d\.]/g, '')) * 1 || 0;
+            const unitPrice = Math.round(total / area) || 0;
+            const infos = { priceTotal: total, priceUnit: unitPrice, area: area };
+            return infos;
+        });
+        return info;
+    });
+    return newInfo;
+}
+exports.fetchHouseInfo = fetchHouseInfo;
 //# sourceMappingURL=bus.js.map

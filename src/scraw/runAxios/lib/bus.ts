@@ -17,7 +17,7 @@ import { JSDOM } from 'jsdom';
 import { getPageSize } from '../../run/lib/bus';
 import { Deferred } from '../../utils/comm';
 
-export async function syncCityHouseInfo(area: HouseAreaDB) {
+export async function syncAreaHouseInfo(area: HouseAreaDB) {
   return await house.run_page(async ct => {
     let url = `https://${area.cityEn}.lianjia.com/ershoufang/${area.nameEn}/`;
     await ct.goto(url, config.goto);

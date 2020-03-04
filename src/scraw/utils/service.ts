@@ -3,7 +3,8 @@ import {
   HouseAreaDB,
   HouseAreaDH,
   HouseInfoDB,
-  HouseInfoDH, HousePriceInfoDH
+  HouseInfoDH,
+  HousePriceInfoDH
 } from '../../interface/instance';
 import { Op } from 'sequelize';
 import { config } from './config';
@@ -34,7 +35,7 @@ export async function findOrCreateArea(data: HouseAreaDH) {
 }
 
 // 拿到下一个需要更新的城市数据
-export async function findNextOne(): Promise<HouseAreaDB | null> {
+export async function findNextArea(): Promise<HouseAreaDB | null> {
   const one = await house.HouseAreaProject.findOne({
     where: {
       lastFetchTime: { [Op.lt]: new Date(Date.now() - config.updateTimeLine) },
@@ -46,17 +47,24 @@ export async function findNextOne(): Promise<HouseAreaDB | null> {
 
 // 获取下一个需要更新的房屋数据
 export async function findNextHouse(): Promise<HouseInfoDB> {
-  const nextHouse = await house.HouseInfoProject.findOne({
+  const res: HouseInfoDB = (await house.HouseInfoProject.findOne({
     where: {
-      updatedAt: { [Op.lt]: new Date(Date.now() - config.updateTimeLine) },
-      cityCn: config.city
+      fetchAt: { [Op.lt]: new Date(Date.now() - config.updateTimeLine) }
     }
-  });
-  return nextHouse as any;
+  })) as any;
+  if (res) {
+    await house.HouseInfoProject.update(
+      { fetchAt: new Date(Date.now()) },
+      {
+        where: { houseDetailId: res.houseDetailId }
+      }
+    );
+  }
+  return res as any;
 }
 
-export async function createHousePrice(data:HousePriceInfoDH) {
-  await house.HousePriceProject.create(data)
+export async function createHousePrice(data: HousePriceInfoDH) {
+  await house.HousePriceProject.create(data);
 }
 
 export async function updatePageIndex(area: HouseAreaDB, pageIndex: number) {

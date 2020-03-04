@@ -1,10 +1,21 @@
 import { house } from './factory';
-import {clearAuto, findNextHouse, findOrCreateArea} from './service';
 import { Op } from 'sequelize';
+import { findNextHouse } from './service';
 
 house.run(main);
 
 async function main() {
-    const house=await findNextHouse();
-    console.log(house.houseDetailId);
+  let c= await house.HouseInfoProject.count()
+    console.log(c);
+}
+
+async function resetTime() {
+  await house.HouseInfoProject.update(
+    { fetchAt: new Date(Date.now()) },
+    {
+      where: {
+        cityEn: 'cq'
+      }
+    }
+  );
 }

@@ -36,6 +36,8 @@ export class House {
     logging: false
   });
   private countA: number[] = [];
+  public completeCount: number = 0;
+  public count: number = 0;
 
   public HouseInfoProject: typeof HouseInfoProject;
   public HouseAreaProject: typeof HouseAreaProject;
@@ -89,6 +91,7 @@ export class House {
       .then(() => {})
       .catch(e => {
         console.error(e?.message);
+        console.log(e);
       })
       .finally(() => {
         console.log('done');
@@ -123,10 +126,11 @@ export class House {
       this.countA.shift();
       this.countA.push(Date.now());
     }
+    this.completeCount++;
     const start = this.countA[0];
     const end = this.countA[this.countA.length - 1];
     const sd = Math.round((end - start) / this.countA.length) || 5000;
-    console.log('speed:', sd + 'ms/p');
+    console.log(`${this.completeCount}/${this.count}`, 'speed:', sd + 'ms/p');
   };
 }
 
