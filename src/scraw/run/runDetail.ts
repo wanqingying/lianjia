@@ -1,7 +1,7 @@
 import { house } from '../utils/factory';
 import { createHousePrice, findNextHouse } from '../utils/service';
 import { fetchHouseInfo } from './lib/bus';
-
+import { timeoutFn } from '../utils/comm';
 
 house.run(main);
 
@@ -21,6 +21,7 @@ async function main() {
     }
     hs = await findNextHouse();
     house.logSpeed();
+    await timeoutFn(100);
     k++;
   }
 }
