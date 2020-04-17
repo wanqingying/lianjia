@@ -38,7 +38,7 @@ export class House {
   private countA: number[] = [];
   public completeCount: number = 0;
   public count: number = 0;
-
+  // 挂载数据库表的实例，可以直接操作
   public HouseInfoProject: typeof HouseInfoProject;
   public HouseAreaProject: typeof HouseAreaProject;
   public HousePriceProject: typeof HousePriceProject;
@@ -46,6 +46,8 @@ export class House {
   constructor(setting?: HouseSetting) {
     Object.assign(this.setting, setting);
   }
+  // 处理需要使用puppeteer的页面资源来执行的任务。
+  // 页面作为函数运行需要的资源，维护一个页面池，类似于数据库连接池
   public run_page = (callback: CBT, _page?: Page): Promise<any> => {
     let page = _page || this.pages.shift();
     let def = new Deferred();
@@ -57,24 +59,20 @@ export class House {
     }
     return def.promise;
   };
-
   private _run_page = ({ callback, def }: Wtg, page: Page) => {
     callback(page)
-      .then(res => {
-        def.resolve(res);
-      })
-      .catch(e => {
-        console.error('catch error run_page');
-        console.error(e.message);
-        debugger;
-        def.resolve();
-      })
+      .then()
+      .catch(this.onError)
       .finally(() => {
         this.releasePage(page);
         def.resolve();
       });
   };
-
+  private onError = e => {
+    console.error('catch error run_page');
+    console.error(e.message);
+  };
+  // 释放页面资源并进行下一个任务
   public releasePage = (page: Page) => {
     let next = this.waitePage.shift();
     if (next) {
@@ -83,7 +81,7 @@ export class House {
       this.pages.push(page);
     }
   };
-
+  // 主循环，主循环内的函数无需关心错误处理以及资源分配等问题
   public run = (callback: () => Promise<any>) => {
     this.start()
       .then(() => callback())
@@ -97,7 +95,7 @@ export class House {
         console.log('done');
       });
   };
-
+  // 启动浏览器，准备数据库
   public start = async () => {
     if (this.setting.pageLimit > 0) {
       this.browser = await launch(config.browser_lunch);
@@ -119,6 +117,7 @@ export class House {
   public end = async () => {
     await Promise.all([this?.browser?.close(), this?.sequelize?.close()]);
   };
+  // 打印任务执行速度
   public logSpeed = () => {
     if (this.countA.length < 10) {
       this.countA.push(Date.now());
@@ -139,6 +138,6 @@ export interface HouseSetting {
   config?: any;
 }
 
-export type CBT = (ct: Page) => Promise<any>;
+export type CBT = (page: Page) => Promise<any>;
 
 export const house = new House({ pageLimit: config.pageLimit });
